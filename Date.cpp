@@ -43,7 +43,7 @@ bool Date::operator>=(const Date &rhs) const
     return !(*this < rhs);
 }
 
-void Date::setdate(int i, int j, int k)
+void Date::setDate(int i, int j, int k)
 {
     Date::setDay(i);
     Date::setMonth(j);
@@ -107,15 +107,14 @@ bool Date::IsAValidDate()
 
 Date Date::operator=(Date *rhs)
 {
-    setdate(rhs->day, rhs->month, rhs->year);
+    setDate(rhs->day, rhs->month, rhs->year);
     setTimeofDay(rhs->hour, rhs->minute, rhs->seconds);
     return *this;
 }
 
 bool Date::operator==(const Date &rhs) const
 {
-    if (year == rhs.year && month == rhs.month
-        && day == rhs.day /*&& hour==rhs.hour && minute==rhs.minute && seconds==rhs.seconds*/) {
+    if (year == rhs.year && month == rhs.month && day == rhs.day) {
         return true;
     } else {
         return false;
@@ -132,40 +131,39 @@ bool Date::operator!=(const Date &rhs) const
 }
 
 //FIXED
-std::string Date::returnDateString()
+std::string Date::returnDateStdString()
 {
     std::string d, m, y, h, min, s;
     d = Date::getDay();
     m = Date::getMonth();
     y = Date::getYear();
-    //h   = Date::getHour();
-    //min = Date::getMinute();
-    //s   = Date::getSeconds();
     std::string result;
     result = d + "/" + m + "/" + y;
     return result;
 }
 
-void Date::ConvertFromQdate(QDate c)
+void Date::convertFromQDate(QDate c)
 {
     Date::year  = c.year();
     Date::month = c.month();
     Date::day   = c.day();
 }
 
-QString Date::convertToQSTring()
+QString Date::convertTimeToQString()
 {
     QString c = c.number(getHour());
     QString d = d.number(getMinute());
     c         = c + ":" + d;
     return c;
 }
-void Date::COnvertFromQTime(QTime s)
+
+void Date::convertFromQTime(QTime s)
 {
     hour    = s.hour();
     minute  = s.minute();
     seconds = s.second();
 }
+
 //checks if c<o
 bool Date::compareTimes(const Date &c, const Date &o)
 {
@@ -182,7 +180,7 @@ bool Date::compareTimes(const Date &c, const Date &o)
     return false;
 }
 
-QString Date::convertToQString2()
+QString Date::convertDateToQString()
 {
     QString d      = QString::number(getDay());
     QString m      = QString::number(getMonth());

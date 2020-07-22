@@ -54,37 +54,37 @@ void CalendarTests::setWrongTimeOfDay()
 void CalendarTests::setWrongDate()
 {
     Date k;
-    QVERIFY_EXCEPTION_THROWN(k.setdate(29, 2, 2001), InvalidDateException);
+    QVERIFY_EXCEPTION_THROWN(k.setDate(29, 2, 2001), InvalidDateException);
 }
 
 void CalendarTests::setWrongDateANDTime()
 {
     Date po;
-    QVERIFY_EXCEPTION_THROWN(po.setdate(45, 21, 1532), InvalidDateException);
+    QVERIFY_EXCEPTION_THROWN(po.setDate(45, 21, 1532), InvalidDateException);
     QVERIFY_EXCEPTION_THROWN(po.setTimeofDay(190, 11, 152), InvalidDateException);
 }
 
 void CalendarTests::setRightDate()
 {
     Date c;
-    c.setdate(29, 2, 2000);
+    c.setDate(29, 2, 2000);
     QCOMPARE(c.IsAValidDate(), true);
 }
 
 void CalendarTests::serRightDateANDTime()
 {
     Date k;
-    k.setdate(29, 2, 2000);
+    k.setDate(29, 2, 2000);
     QCOMPARE(k.IsAValidDate(), true);
     k.setTimeofDay(00, 00, 01);
-    QCOMPARE(k.convertToQSTring(), "0:0");
+    QCOMPARE(k.convertTimeToQString(), "0:0");
 }
 
 void CalendarTests::CompareDates()
 {
     //Return true se p1<p2
     Date p1;
-    p1.setdate(1, 1, 1999);
+    p1.setDate(1, 1, 1999);
     Date p2;
     QCOMPARE(p1 < p2, true);
 }
@@ -124,7 +124,7 @@ void CalendarTests::StartTimeGreaterEndTimewithSetTime()
 void CalendarTests::EndTimeLesserStartTimeinCTor()
 {
     Date u;
-    u.setdate(1, 1, 1995);
+    u.setDate(1, 1, 1995);
     Date d;
     QVERIFY_EXCEPTION_THROWN(Activity s("Test", "TestDesc", d, u), NotAValidActivity);
 }
@@ -151,7 +151,7 @@ void CalendarTests::AddActivity()
     Date p;
     Activity ka("Test", "Test2", o, k);
     c.addActivity(p, ka);
-    QCOMPARE(c.FindActivity(p, ka.getName()) == ka, true);
+    QCOMPARE(c.findActivity(p, ka.getName()) == ka, true);
 }
 
 void CalendarTests::EditActivityNoDayFound()
@@ -177,8 +177,8 @@ void CalendarTests::DeleteActivityNoDayFound()
     p.setTimeofDay(11, 10, 00);
     Activity ac("Test", "Testdesc", o, p);
     c.addActivity(start, ac);
-    c.DeleteActivity(start, ac.getName());
-    QVERIFY_EXCEPTION_THROWN(c.FindActivity(start, ac.getName()), NoDayFound);
+    c.deleteActivity(start, ac.getName());
+    QVERIFY_EXCEPTION_THROWN(c.findActivity(start, ac.getName()), NoDayFound);
 }
 
 void CalendarTests::cleanupTestCase() {}

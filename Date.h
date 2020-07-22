@@ -25,12 +25,19 @@ class Date
 {
 private:
     unsigned int day;
+
     unsigned int month;
+
     unsigned int year;
+
     unsigned int hour;
+
     unsigned int minute;
+
     unsigned int seconds;
+
     bool isvalidDate;
+
     void setHour(const unsigned int &hour)
     {
         if (hour <= 23) {
@@ -48,6 +55,7 @@ private:
             throw InvalidDateException("I minuti devono essere compresi da 00 a 59");
         }
     }
+
     void setYear(const unsigned int &year) { Date::year = year; }
     void setMonth(const unsigned int &month)
     {
@@ -57,6 +65,7 @@ private:
             throw InvalidDateException("Questo mese non appartiene al calendario gregoriano");
         }
     }
+
     void setDay(const unsigned int &day)
     {
         if (day <= 31) {
@@ -66,6 +75,7 @@ private:
                 "Il giorno inserito non rispetta le regole del calendario gregoriano");
         }
     }
+
     void setSeconds(const unsigned int &seconds)
     {
         if (seconds <= 59) {
@@ -104,12 +114,14 @@ public:
 
     //DEBUG
 #ifdef QT_DEBUG
+
     void printDate() const
     {
         cout << getDay() << "/" << getMonth() << "/" << getYear() << "      " << getHour() << ":"
              << getMinute() << ":" << getSeconds() << endl;
     }
 #endif
+
     ~Date() = default;
 
     bool operator<(const Date &rhs) const;
@@ -121,16 +133,25 @@ public:
     bool operator>=(const Date &rhs) const;
 
     Date operator=(Date *rhs);
+
     bool operator==(const Date &rhs) const;
+
     bool operator!=(const Date &rhs) const;
 
-    void setdate(int i, int j, int k);
+    void setDate(int i, int j, int k);
+
     void setTimeofDay(int l, int m, int n);
-    std::string returnDateString();
-    void ConvertFromQdate(QDate c);
-    QString convertToQSTring();
-    void COnvertFromQTime(QTime s);
+
+    std::string returnDateStdString();
+
+    void convertFromQDate(QDate c);
+
+    QString convertTimeToQString();
+
+    void convertFromQTime(QTime s);
+
     static bool compareTimes(const Date &c, const Date &o);
-    QString convertToQString2();
+
+    QString convertDateToQString();
 };
 #endif //UNTITLED_DATE_H

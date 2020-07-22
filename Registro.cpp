@@ -11,18 +11,18 @@ void Register::addActivity(Date &z, Activity &n)
         if (it->second.empty()) {
             it->second.push_front(n);
         } else {
-            if (CustomSortComparator(n, it->second.front())) {
+            if (customSortComparator(n, it->second.front())) {
                 it->second.push_front(n);
             } else {
-                if (CustomSortComparator(it->second.back(), n)) {
+                if (customSortComparator(it->second.back(), n)) {
                     it->second.push_back(n);
                 } else {
                     it->second.push_back(n);
-                    it->second.sort(CustomSortComparator);
+                    it->second.sort(customSortComparator);
                 }
             }
             // it->second.push_back(n);
-            //it->second.sort(CustomSortComparator);
+            //it->second.sort(customSortComparator);
             //funzionavano il 10/07/2020
         }
     } else {
@@ -33,6 +33,7 @@ void Register::addActivity(Date &z, Activity &n)
         Registro.insert(pair<Date, std::list<Activity>>(z, as));
     }
 }
+
 //debug
 #ifdef QT_DEBUG
 void Register::printAllActivities() const
@@ -55,6 +56,7 @@ void Register::printSpecificDay(Date &d) const
     }
 }
 #endif
+
 //Fixme add QTime to the activity
 void Register::editActivity(const Date &d,
                             const std::string &c,
@@ -92,16 +94,17 @@ void Register::editActivity(const Date &d,
         throw NoDayFound("Nessun giorno corrispondente trovato");
     }
 }
+
 //Se la funzione non trova la data/la lista delle attività è vuota ritorna la stringa c con un appropiato messaggio;
 //FIXME il returnDateString, una volta convertito a QDateString, riporta errore di formattazione
-std::string Register::output(const Date d)
+std::string Register::outputToStdString(const Date d)
 {
     auto it = Registro.find(d);
     std::string c;
     if (it != Registro.end()) {
         for (auto ip = it->second.begin(); ip != it->second.end(); ip++) {
             c += "\n" + ip->getName() + "  " + ip->getDescriptionName() + " "
-                 + ip->getStartdate().returnDateString();
+                 + ip->getStartdate().returnDateStdString();
         }
         return c;
     } else {
@@ -110,7 +113,7 @@ std::string Register::output(const Date d)
     }
 }
 
-void Register::DeleteActivity(const Date &f, const std::string &a)
+void Register::deleteActivity(const Date &f, const std::string &a)
 {
     auto it = Registro.find(f);
     if (it != Registro.end()) {
@@ -133,7 +136,7 @@ void Register::DeleteActivity(const Date &f, const std::string &a)
     };
 }
 
-bool Register::CustomSortComparator(const Activity &c, const Activity &d)
+bool Register::customSortComparator(const Activity &c, const Activity &d)
 {
     if (Date::compareTimes(c.getStartdate(), d.getStartdate())) {
         return true;
@@ -142,15 +145,15 @@ bool Register::CustomSortComparator(const Activity &c, const Activity &d)
     }
 }
 
-QString Register::output2(const Date &d)
+QString Register::outputToQString(const Date &d)
 {
     auto it = Registro.find(d);
     QString k;
     if (it != Registro.end()) {
         for (auto ip = it->second.begin(); ip != it->second.end(); ip++) {
-            k += "\n" + ip->getQStringName() + "  " + ip->getQSTringDesc() + " "
-                 + ip->getStartdate().convertToQSTring() + " - "
-                 + ip->getEnddate().convertToQSTring();
+            k += "\n" + ip->getQStringName() + "  " + ip->getQStringDesc() + " "
+                 + ip->getStartdate().convertTimeToQString() + " - "
+                 + ip->getEnddate().convertTimeToQString();
         }
         return k;
     } else {
@@ -159,7 +162,7 @@ QString Register::output2(const Date &d)
     }
 }
 
-Activity Register::FindActivity(Date z, string name)
+Activity Register::findActivity(Date z, string name)
 {
     auto it = Registro.find(z);
     if (it != Registro.end()) {

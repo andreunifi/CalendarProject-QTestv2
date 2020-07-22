@@ -31,7 +31,7 @@ public:
     Activity(const string &a, const string &n, const Date &s, const Date &e)
         : name(a), description_name(n), startdate(s), enddate(e), isvalid(true)
     {
-        if (CheckifValid() == false)
+        if (checkifvalid() == false)
             throw NotAValidActivity("L'attività non è valida");
     }
     //DEBUG USE
@@ -48,10 +48,7 @@ public:
     Activity(const Activity &p)
         : name(p.getName()), description_name(p.getDescriptionName()), startdate(p.getStartdate()),
           enddate(p.getEnddate())
-    {
-        //if (CheckifValid() == false)
-        //throw NotAValidActivity("L'attività non è valida");
-    }
+    {}
 
     bool operator==(const Activity &rhs) const { return startdate == rhs.startdate; }
 
@@ -65,11 +62,13 @@ public:
 
     bool operator>=(const Activity &rhs) const;
 
-    const string &getName() const;
-    QString getQStringName();
-    QString getQSTringDesc();
+    const string getName() const;
 
-    const string &getDescriptionName() const;
+    QString getQStringName();
+
+    QString getQStringDesc();
+
+    const string getDescriptionName() const;
 
     Date getStartdate() const;
 
@@ -82,9 +81,12 @@ public:
     void setStartdate(const Date &startdate);
 
     void setEnddate(const Date &enddate);
-    std::string ReturnString();
+
+    std::string returnStdString();
+
     Activity returnActivity() { return *this; }
-    bool CheckifValid();
+
+    bool checkifvalid();
 };
 
 #endif //UNTITLED_ACTIVITY_H

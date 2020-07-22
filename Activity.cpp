@@ -23,7 +23,7 @@ bool Activity::operator>=(const Activity &rhs) const
     return !(*this < rhs);
 }
 
-const string &Activity::getName() const
+const string Activity::getName() const
 {
     return name;
 }
@@ -35,14 +35,14 @@ QString Activity::getQStringName()
     return k;
 }
 
-QString Activity::getQSTringDesc()
+QString Activity::getQStringDesc()
 {
     QString a;
     a = QString::fromStdString(getDescriptionName());
     return a;
 }
 
-const string &Activity::getDescriptionName() const
+const string Activity::getDescriptionName() const
 {
     return description_name;
 }
@@ -75,17 +75,18 @@ void Activity::setStartdate(const Date &startdate)
 void Activity::setEnddate(const Date &enddate)
 {
     Activity::enddate = enddate;
-    if (CheckifValid() == false)
+    if (checkifvalid() == false)
         throw NotAValidActivity("L'attività non è valida-endate");
 }
-std::string Activity::ReturnString()
+
+std::string Activity::returnStdString()
 {
     std::string f;
     f = Activity::getDescriptionName();
     return f;
 }
 //CompareTimes verifies that startdate is < than enddate
-bool Activity::CheckifValid()
+bool Activity::checkifvalid()
 {
     if (startdate.IsAValidDate() == true && enddate.IsAValidDate() == true
         && Date::compareTimes(startdate, enddate) == true) {
